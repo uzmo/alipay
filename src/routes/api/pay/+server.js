@@ -2,17 +2,16 @@ import { json } from "@sveltejs/kit"
 import AlipaySdk from 'alipay-sdk';
 import AlipayFormData from 'alipay-sdk/lib/form';
 
-/** @type {import('./$types').RequestHandler} */
 export async function POST() {
 
     // dvpudg5189@sandbox.com
     // 普通公钥模式
-    let alipaySdk = new AlipaySdk({
-        // 参考下方 SDK 配置
+    const config = {
         appId: 'YourAppId',
         privateKey: 'YourPrivateKey',
         gateway: 'https://openapi.alipaydev.com/gateway.do',
-    });
+    }
+    let alipaySdk  = new AlipaySdk.default(config);
 
     const bizContent = {
         out_trade_no: '1234567890',
@@ -22,7 +21,7 @@ export async function POST() {
         total_amount: '1.00',
     }
     
-    const formData = new AlipayFormData();
+    const formData = new AlipayFormData.default();
     formData.setMethod('get');
     formData.addField('bizContent', bizContent);
 
